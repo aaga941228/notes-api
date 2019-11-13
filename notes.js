@@ -1,6 +1,6 @@
 module.exports = [
   {
-    id: 1,
+    id: 0,
     title: 'New note',
     note: 'first note'
   }
