@@ -47,7 +47,7 @@ router
     }
     const { title, note } = req.body
     const updatedNote = {
-      id,
+      id: Number(id),
       title: title.replace(/\n/, ''),
       note: note.replace(/\n/, '')
     }
