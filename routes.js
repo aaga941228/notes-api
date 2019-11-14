@@ -5,7 +5,7 @@ let counter = 1;
 router
 
   .get('/', (req, res) => {
-    res.json(notes)
+    res.status(200).json(notes)
   })
 
   .post('/', (req, res) => {
@@ -17,14 +17,14 @@ router
     }
     counter++;
     notes.push(newNote)
-    res.json({ id: newNote.id })
+    res.status(201).json({ id: newNote.id })
   })
 
   .delete('/:id', (req, res) => {
     const { id } = req.params
     const _id = parseInt(id)
-    if (isNaN(_id) || _id < 0) {
-      res.send('id invalid')
+    if (isNaN(_id) || _id < 0 || _id > counter) {
+      res.status(400).json({ response: 'id invalid' })
       return
     }
 
@@ -35,14 +35,14 @@ router
     })
     const index = notes.indexOf(note)
     notes.splice(index, 1);
-    res.json('deleted')
+    res.status(200).json({ response: 'deleted' })
   })
 
   .put('/:id', (req, res) => {
     const { id } = req.params
     const _id = Number(id)
-    if (isNaN(_id) || _id < 0) {
-      res.send('id invalid')
+    if (isNaN(_id) || _id < 0 || _id > counter) {
+      res.status(404).json({ response: 'id invalid' })
       return
     }
     const { title, note } = req.body
@@ -58,7 +58,7 @@ router
     })
     const index = notes.indexOf(nt)
     notes.splice(index, 1, updatedNote)
-    res.send('updated')
+    res.status(200).json({ response: 'updated' })
   })
 
 module.exports = router
