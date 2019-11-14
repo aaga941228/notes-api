@@ -1,7 +1,10 @@
 const router = require('express').Router()
 let notes = require('./notes')
 
-let counter = 1;
+const ID = function () {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
 router
 
   .get('/', (req, res) => {
@@ -11,22 +14,21 @@ router
   .post('/', (req, res) => {
     const { title, note } = req.body
     const newNote = {
-      id: counter,
+      id: ID(),
       title,
       note
     }
-    counter++;
     notes.push(newNote)
     res.status(201).json({ id: newNote.id })
   })
 
   .delete('/:id', (req, res) => {
     const { id } = req.params
-    const _id = parseInt(id)
-    if (isNaN(_id) || _id < 0 || _id > counter) {
-      res.status(400).json({ response: 'id invalid' })
-      return
-    }
+    // const _id = parseInt(id)
+    // if (isNaN(_id) || _id < 0 || _id > counter) {
+    //   res.status(400).json({ response: 'id invalid' })
+    //   return
+    // }
 
     const note = notes.find((n) => {
       if (n.id === id) {
@@ -40,16 +42,16 @@ router
 
   .put('/:id', (req, res) => {
     const { id } = req.params
-    const _id = Number(id)
-    if (isNaN(_id) || _id < 0 || _id > counter) {
-      res.status(404).json({ response: 'id invalid' })
-      return
-    }
+    // const _id = Number(id)
+    // if (isNaN(_id) || _id < 0 || _id > counter) {
+    //   res.status(404).json({ response: 'id invalid' })
+    //   return
+    // }
     const { title, note } = req.body
     const updatedNote = {
-      id: Number(id),
-      title: title.replace(/\n/, ''),
-      note: note.replace(/\n/, '')
+      id,
+      title: title.replace(/\n/, ' '),
+      note: note.replace(/\n/, ' ')
     }
     const nt = notes.find(e => {
       if (e.id === id) {
