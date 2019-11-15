@@ -17,7 +17,7 @@ describe('appointment app', function () {
 
         const expectedResponse = [
           {
-            id: 0,
+            id: "_hbe8y5xke",
             title: 'New note',
             note: 'first note'
           }
@@ -43,7 +43,7 @@ describe('appointment app', function () {
         }
 
         const expectedResponse = {
-          id: 1
+          id: "_hbe8y5xke"
         }
 
         expect(res.body).to.be.deep.equal(expectedResponse)
@@ -71,7 +71,7 @@ describe('appointment app', function () {
 
   it('should delete a user', function (done) {
     supertest(app)
-      .delete('/1')
+      .delete('/_hbe8y5xke')
       .expect(200)
       .end((err, res) => {
         if (err) {
@@ -106,9 +106,9 @@ describe('appointment app', function () {
       })
   })
 
-  it('should update a note', function (done) {
+  it.only('should update a note', function (done) {
     supertest(app)
-      .put('/1')
+      .put('/_hbe8y5xke')
       .send({
         title: '',
         note: ''

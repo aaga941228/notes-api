@@ -24,17 +24,15 @@ router
 
   .delete('/:id', (req, res) => {
     const { id } = req.params
-    // const _id = parseInt(id)
-    // if (isNaN(_id) || _id < 0 || _id > counter) {
-    //   res.status(400).json({ response: 'id invalid' })
-    //   return
-    // }
-
     const note = notes.find((n) => {
       if (n.id === id) {
         return n
       }
     })
+    if (note === undefined) {
+      res.status(400).json({ response: 'id invalid' })
+      return
+    }
     const index = notes.indexOf(note)
     notes.splice(index, 1);
     res.status(200).json({ response: 'deleted' })
@@ -42,22 +40,21 @@ router
 
   .put('/:id', (req, res) => {
     const { id } = req.params
-    // const _id = Number(id)
-    // if (isNaN(_id) || _id < 0 || _id > counter) {
-    //   res.status(404).json({ response: 'id invalid' })
-    //   return
-    // }
+    const nt = notes.find(e => {
+      if (e.id === id) {
+        return e
+      }
+    })
+    if (nt === undefined) {
+      res.status(404).json({ response: 'id invalid' })
+      return
+    }
     const { title, note } = req.body
     const updatedNote = {
       id,
       title: title.replace(/\n/, ' '),
       note: note.replace(/\n/, ' ')
     }
-    const nt = notes.find(e => {
-      if (e.id === id) {
-        return e
-      }
-    })
     const index = notes.indexOf(nt)
     notes.splice(index, 1, updatedNote)
     res.status(200).json({ response: 'updated' })
