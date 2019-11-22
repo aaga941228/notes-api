@@ -1,22 +1,24 @@
 {
-  "name": "testing-http",
+  "name": "notes-pwa",
   "version": "1.0.0",
-  "description": "",
+  "description": "pwa",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./index.js",
-    "test": "mocha ./test/**/*.test.js --reporter progress --timeout=5000"
+    "dev": "nodemon ./index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mocha": "^6.2.2",
     "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
     "nodemon": "^1.19.4",
-    "supertest": "^4.0.2"
+    "sequelize-cli": "^5.5.1"
+  },
+  "dependencies": {
+    "mysql2": "^2.0.1",
+    "sequelize": "^5.21.2"
   }
 }
