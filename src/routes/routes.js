@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controllers = require("../controllers/notes.controllers");
+const controllers = require("../controllers/notesControllers");
 
 router
   .get("/", controllers.getNotes)
