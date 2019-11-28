@@ -1,5 +1,4 @@
-const sequelize = require("../database");
-const noteModel = sequelize.models.note;
+const DataBase = require("../database/database");
 
 const ID = function() {
   return (
@@ -12,12 +11,12 @@ const ID = function() {
 
 module.exports = {
   getNotes: async function(req, res) {
-    const nts = await noteModel.findAll();
+    const nts = await DataBase("findAll");
     res.status(200).json(nts);
   },
   getNote: async function(req, res) {
     const { id } = req.params;
-    const nt = await noteModel.findOne({ id });
+    const nt = await DataBase("findOne", id);
     if (!nt) {
       res.status(404).json({ response: "note not found" });
       return;
@@ -32,7 +31,7 @@ module.exports = {
         title,
         note
       };
-      await noteModel.create(nwNt);
+      await DataBase("createOne", {}, {}, nwNt);
       res.status(201).json({ id: nwNt.id });
       return;
     }
@@ -41,22 +40,22 @@ module.exports = {
       title,
       note
     };
-    await noteModel.create(nwNt);
+    await DataBase("createOne", {}, {}, nwNt);
     res.status(201).json({ id: nwNt.id });
   },
   deleteNote: async function(req, res) {
     const { id } = req.params;
-    const nt = await noteModel.findOne({ where: { id } });
+    const nt = await DataBase("findOne", id);
     if (!nt) {
       res.status(404).json({ response: "note not found" });
     }
-    await nt.destroy();
+    await DataBase("deleteOne", {}, nt);
     res.status(200).json({ response: "deleted" });
   },
   putNote: async function(req, res) {
     const { id } = req.params;
     const { title, note } = req.body;
-    const nt = await noteModel.findOne({ where: { id } });
+    const nt = await DataBase("findOne", id);
     if (!nt) {
       res.status(404).json({ response: "note not found" });
       return;
@@ -66,7 +65,7 @@ module.exports = {
       title,
       note
     };
-    await nt.update(updtdNt);
+    await DataBase("updateOne", {}, nt, updtdNt);
     res.status(200).json({ response: "updated" });
   }
 };
