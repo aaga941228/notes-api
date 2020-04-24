@@ -1,25 +1,51 @@
 const sequelize = require("../database/sequelize");
-const noteModel = sequelize.models.note;
+const { note } = sequelize.models;
 
-const DataBaseQueries = async function(querie, id, item, newItem) {
-  switch (querie) {
-    case "findAll":
-      const elements = await noteModel.findAll();
-      return elements;
-    case "findOne":
-      const element = await noteModel.findOne({ where: { id } });
+const queries = {
+  findAll: async function () {
+    try {
+      const elements = await note.findAll();
+      return elements || [];
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  findOne: async function (id) {
+    try {
+      const element = await note.findOne({ where: { id } });
       return element;
-    case "createOne":
-      await noteModel.create(newItem);
-      return;
-    case "updateOne":
-      await item.update(newItem);
-      return;
-    case "deleteOne":
-      await item.destroy();
-    default:
-      break;
-  }
-};
+    } catch (err) {
+      console.error(err)
+    }
+  },
 
-module.exports = DataBaseQueries;
+  createOne: async function (newItem) {
+    try {
+      const element = await note.create(newItem);
+      return element;
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  updateOne: async function (item, newItem) {
+    try {
+      const element = await item.update(newItem);
+      return element;
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  deleteOne: async function (item) {
+    try {
+      const element = await item.destroy();
+      return element;
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+module.exports = queries;

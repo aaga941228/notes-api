@@ -1,5 +1,7 @@
 const { Sequelize, Model } = require("sequelize");
-const sequelize = new Sequelize("notes", "root", "", {
+const config = require('../config')
+
+const sequelize = new Sequelize("notes", "root", config.mysql_password, {
   host: "localhost",
   dialect: "mysql",
   port: "3306",
@@ -11,7 +13,7 @@ const sequelize = new Sequelize("notes", "root", "", {
   }
 });
 
-class Note extends Model {}
+class Note extends Model { }
 Note.init(
   {
     id: {

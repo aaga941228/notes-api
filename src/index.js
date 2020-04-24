@@ -1,20 +1,17 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const config = require('./config')
 
-// initializing
 const app = express();
 
-// settings
-app.set("port", process.env.PORT || 8080);
+app.set("port", config.port);
 
-// middlewares
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-// routes
-app.use("/api/notes", require("./src/routes/routes"));
+app.use("/api/notes", require("./routes"));
 
 app.listen(app.get("port"), () => {
   console.log(`server on port ${app.get("port")}`);
